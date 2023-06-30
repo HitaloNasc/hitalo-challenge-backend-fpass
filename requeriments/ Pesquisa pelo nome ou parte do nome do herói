@@ -1,0 +1,23 @@
+# Funcionalidade: Pesquisa de heróis por nome
+
+## Cenário: Pesquisar por nome completo de herói existente
+
+Dado que a API da Marvel está disponível
+Quando o usuário pesquisa pelo nome completo de um herói existente
+Então o sistema faz uma chamada à API da Marvel para obter o herói correspondente
+E o sistema retorna os heróis correspondentes ao nome pesquisado
+
+## Cenário: Pesquisar por parte do nome de herói existente
+
+Dado que a API da Marvel está disponível
+Quando o usuário pesquisa por parte do nome de um herói existente
+Então o sistema faz uma chamada à API da Marvel para obter os heróis que possuem a parte do nome pesquisada
+E o sistema retorna os heróis correspondentes
+
+## Cenário: Pesquisar por nome de herói inexistente
+
+Dado que a API da Marvel está disponível
+Quando o usuário pesquisa pelo nome de um herói inexistente
+Então o sistema faz uma chamada à API da Marvel para buscar o herói correspondente
+E o sistema não encontra o herói
+E o sistema não retorna nenhum herói
