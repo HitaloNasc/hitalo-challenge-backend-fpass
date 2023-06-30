@@ -1,12 +1,10 @@
-import { env } from 'src/shared/protocols/env';
 import { buildQueryString } from '../../../shared/helpers/build-query-string';
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ICharacterRepository, ICharacterFetchResponse } from '../interfaces';
-/* 
-export class MarvelCharacterRepository implements ICharacterRepository {
-    private readonly baseUrl = 'https://gateway.marvel.com/v1/public/characters?';
+import { HttpClientRepository } from '../../../shared/repositories/http-client.repository';
 
-    // @ts-ignore
+export class MarvelCharacterRepository implements ICharacterRepository {
+    constructor(private readonly fetchRequest = new HttpClientRepository('https://gateway.marvel.com/v1/public')) {}
+
     public async lazyList(name?: string, limit?: number, offset?: number) {
         const queryParams = buildQueryString({
             ts: process.env.MARVEL_TIMESTAMP,
@@ -17,23 +15,8 @@ export class MarvelCharacterRepository implements ICharacterRepository {
             offset,
         });
 
-        let result;
-        axios
-            .get(`${this.baseUrl}${queryParams.toString()}`)
-            .then((response: AxiosResponse) => {
-                console.log('Dados da API:', response.data);
-                result = response.data;
-            })
-            .catch((error: AxiosError) => {
-                console.error('Erro ao obter dados da API:', error.message);
-            });
+        const result = await this.fetchRequest.get<ICharacterFetchResponse>(`/characters?${queryParams}`);
 
-        return result;
-    }
-
-    // @ts-ignore
-    public async getById(id: number) {
-        throw new Error('Method not implemented.');
+        return result.data.results;
     }
 }
- */
