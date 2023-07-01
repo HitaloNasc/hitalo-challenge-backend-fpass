@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import '../src/shared/protocols/env-test';
 
-describe('AppController (e2e)', () => {
+describe('CharacterController (e2e)', () => {
     let app: INestApplication;
 
     beforeEach(async () => {
