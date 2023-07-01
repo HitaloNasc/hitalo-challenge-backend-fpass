@@ -1,4 +1,4 @@
-import { ICharacter } from '../interfaces/character.interface';
+import { ICharacter } from '../interfaces';
 
 export class Character {
     id: number;

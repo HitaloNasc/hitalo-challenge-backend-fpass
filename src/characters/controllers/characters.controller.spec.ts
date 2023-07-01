@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CharactersController } from './characters.controller';
+import { CharactersController } from '.';
 import { CharactersService } from '../services/characters.service';
 import { HttpModule } from '@nestjs/axios';
 import '../../shared/protocols/env-test';

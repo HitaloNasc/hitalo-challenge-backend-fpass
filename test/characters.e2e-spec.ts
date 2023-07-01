@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../src/app.module';
+import '../src/shared/protocols/env-test';
 
 describe('AppController (e2e)', () => {
     let app: INestApplication;
@@ -15,7 +16,12 @@ describe('AppController (e2e)', () => {
         await app.init();
     });
 
-    it('/ (GET)', () => {
-        return request(app.getHttpServer()).get('/').expect(200).expect('The server is up!');
+    describe('GET /characters', () => {
+        it('should return a list of characters', async () => {
+            const characters = await request(app.getHttpServer()).get('/characters');
+
+            expect(characters.statusCode).toBe(200);
+            expect(characters.body).toHaveLength(20);
+        });
     });
 });

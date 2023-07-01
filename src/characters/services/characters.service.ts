@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { Character } from '../entities/character.entity';
-import { buildQueryString } from '../../shared/helpers/build-query-string';
+import { Character } from '../entities';
+import { buildQueryString } from '../../shared/helpers';
 
 @Injectable()
 export class CharactersService {

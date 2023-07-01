@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { CharactersService } from './services/characters.service';
-import { CharactersController } from './controllers/characters.controller';
 import { HttpModule } from '@nestjs/axios';
+import { CharactersService } from './services';
+import { CharactersController } from './controllers';
 
 @Module({
     imports: [HttpModule],
