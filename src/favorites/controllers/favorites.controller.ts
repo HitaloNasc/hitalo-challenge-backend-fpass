@@ -7,8 +7,8 @@ export class FavoritesController {
     constructor(private readonly favoritesService: FavoritesService) {}
 
     @Post()
-    create(@Body() createFavoriteDto: Character) {
-        return this.favoritesService.create(createFavoriteDto);
+    create(@Body() character: Character) {
+        return this.favoritesService.create(character);
     }
 
     @Get()

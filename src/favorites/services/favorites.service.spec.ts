@@ -3,6 +3,7 @@ import { Favorite } from '../entities';
 import { FavoritesService } from '.';
 import { Character } from '../../characters/entities';
 import { InMemoryFavoriteRepository } from '../repositories';
+import { HttpException } from '@nestjs/common';
 
 describe('FavoritesService', () => {
     let service: FavoritesService;
@@ -19,20 +20,62 @@ describe('FavoritesService', () => {
         expect(service).toBeDefined();
     });
 
-    it('should create a favorite', () => {
-        const character: Character = {
-            id: 1,
-            name: '3-D Man',
-            description: '',
-            modified: '2014-04-29T14:18:17-0400',
-            resourceURI: 'http://gateway.marvel.com/v1/public/characters/1011334',
-        };
-        const expectedFavorite: Favorite = new Favorite(character);
+    describe('create', () => {
+        it('should return a error if the character is invalid', () => {
+            const character = {
+                id: 1,
+                name: '',
+                description: '',
+                modified: '',
+                resourceURI: '',
+            };
 
-        service.create(character);
+            expect.assertions(2);
 
-        const allFavorites = service.findAll();
-        expect(allFavorites).toContainEqual(expectedFavorite);
+            try {
+                service.create(character);
+            } catch (error) {
+                expect(error).toBeInstanceOf(HttpException);
+                expect(error.message).toEqual('Property name is required');
+            }
+        });
+
+        it('should return a error if the favorite already exists', () => {
+            const character: Character = {
+                id: 1,
+                name: '3-D Man',
+                description: '',
+                modified: '2014-04-29T14:18:17-0400',
+                resourceURI: 'http://gateway.marvel.com/v1/public/characters/1011334',
+            };
+
+            service.create(character);
+
+            expect.assertions(2);
+
+            try {
+                service.create(character);
+            } catch (error) {
+                expect(error).toBeInstanceOf(HttpException);
+                expect(error.message).toEqual('Favorite already exists');
+            }
+        });
+
+        it('should create a favorite', () => {
+            const character: Character = {
+                id: 1,
+                name: '3-D Man',
+                description: '',
+                modified: '2014-04-29T14:18:17-0400',
+                resourceURI: 'http://gateway.marvel.com/v1/public/characters/1011334',
+            };
+            const expectedFavorite: Favorite = new Favorite(character);
+
+            service.create(character);
+
+            const allFavorites = service.findAll();
+            expect(allFavorites).toContainEqual(expectedFavorite);
+        });
     });
 
     it('should return all favorites', () => {
