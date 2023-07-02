@@ -7,13 +7,14 @@ import { buildQueryString } from '../../shared/helpers';
 export class CharactersService {
     constructor(private readonly httpService: HttpService) {}
 
-    async findMany(name?: string, limit?: number, offset?: number): Promise<Character[]> {
+    async findMany(params?: { name?: string; offset?: number; limit?: number }): Promise<Character[]> {
+        const { name, limit, offset } = params || {};
         const baseUrl = 'https://gateway.marvel.com/v1/public/characters?';
         const queryParams = buildQueryString({
             ts: process.env.MARVEL_TIMESTAMP,
             apikey: process.env.MARVEL_API_KEY,
             hash: process.env.MARVEL_HASH,
-            name,
+            nameStartsWith: name,
             limit,
             offset,
         });

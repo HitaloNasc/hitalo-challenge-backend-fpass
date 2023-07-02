@@ -36,7 +36,7 @@ describe('CharactersController', () => {
 
             await controller.findMany();
 
-            expect(service.findMany).toHaveBeenCalledWith(undefined);
+            expect(service.findMany).toHaveBeenCalledWith({ name: undefined, offset: undefined });
         });
     });
 });

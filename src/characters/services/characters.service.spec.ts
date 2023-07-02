@@ -29,14 +29,14 @@ describe('CharactersService', () => {
     });
 
     it('should return a list with setted limit', async () => {
-        const result = await service.findMany('', 1, 1);
+        const result = await service.findMany({ name: '', limit: 1, offset: 1 });
 
         expect(result).toHaveLength(1);
     });
 
     it('should return a second list diferent from the first with setted offset', async () => {
-        const firstList = await service.findMany('', 1, 1);
-        const secondList = await service.findMany('', 1, 2);
+        const firstList = await service.findMany({ name: '', limit: 1, offset: 1 });
+        const secondList = await service.findMany({ name: '', limit: 1, offset: 2 });
 
         expect(firstList).toHaveLength(1);
         expect(secondList).toHaveLength(1);
@@ -44,7 +44,7 @@ describe('CharactersService', () => {
     });
 
     it('should return a list with setted name', async () => {
-        const [result] = await service.findMany('Iron Man');
+        const [result] = await service.findMany({ name: 'Iron Man' });
 
         expect(result).toHaveProperty('name', 'Iron Man');
     });
